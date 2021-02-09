@@ -29,7 +29,7 @@ namespace AboMB12
             string HEURE = csvData.Rows[ligne].ItemArray[10].ToString();
 
             // Create a new PDF document
-            PdfSharp.Pdf.PdfDocument document = new PdfDocument();
+            PdfDocument document = new PdfDocument();
             document.Info.Title = $"abonnement {RAISON_SOCIALE}";
 
             // Create an empty page

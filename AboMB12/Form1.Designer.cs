@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_import_csv = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -52,55 +53,63 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.but_sauve = new System.Windows.Forms.Button();
             this.button_TOUT_envoyer = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_import_csv
             // 
+            this.btn_import_csv.AccessibleDescription = "";
             this.btn_import_csv.Location = new System.Drawing.Point(12, 12);
             this.btn_import_csv.Name = "btn_import_csv";
-            this.btn_import_csv.Size = new System.Drawing.Size(98, 23);
+            this.btn_import_csv.Size = new System.Drawing.Size(171, 23);
             this.btn_import_csv.TabIndex = 0;
+            this.btn_import_csv.Tag = "sdfgs";
             this.btn_import_csv.Text = "Importer CSV";
+            this.toolTip1.SetToolTip(this.btn_import_csv, "Import du CSV");
             this.btn_import_csv.UseVisualStyleBackColor = true;
-            this.btn_import_csv.Click += new System.EventHandler(this.btn_import_csv_Click);
+            this.btn_import_csv.Click += new System.EventHandler(this.ButtonImportCsvClick);
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView1.Location = new System.Drawing.Point(12, 41);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.Size = new System.Drawing.Size(1242, 168);
             this.dataGridView1.TabIndex = 1;
@@ -109,14 +118,15 @@
             // bnt_generer
             // 
             this.bnt_generer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_generer.Location = new System.Drawing.Point(1016, 12);
+            this.bnt_generer.Location = new System.Drawing.Point(189, 12);
             this.bnt_generer.Name = "bnt_generer";
-            this.bnt_generer.Size = new System.Drawing.Size(73, 23);
+            this.bnt_generer.Size = new System.Drawing.Size(238, 23);
             this.bnt_generer.TabIndex = 3;
-            this.bnt_generer.Text = "Brouillons";
+            this.bnt_generer.Text = "Tous les Brouillons OUTLOOK";
+            this.toolTip1.SetToolTip(this.bnt_generer, "Générer tout les brouillons dans OUTLOOK");
             this.bnt_generer.UseVisualStyleBackColor = true;
             this.bnt_generer.Visible = false;
-            this.bnt_generer.Click += new System.EventHandler(this.bnt_generer_tous_brouillons_Click);
+            this.bnt_generer.Click += new System.EventHandler(this.ButtonGenererAllBrouillon);
             // 
             // openFileDialogCSV
             // 
@@ -129,11 +139,11 @@
             // textBox_message
             // 
             this.textBox_message.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_message.Location = new System.Drawing.Point(47, 52);
+            this.textBox_message.Location = new System.Drawing.Point(47, 50);
             this.textBox_message.Multiline = true;
             this.textBox_message.Name = "textBox_message";
             this.textBox_message.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_message.Size = new System.Drawing.Size(416, 419);
+            this.textBox_message.Size = new System.Drawing.Size(416, 421);
             this.textBox_message.TabIndex = 8;
             // 
             // textBox_titre_attestation
@@ -173,7 +183,7 @@
             this.groupBox1.Controls.Add(this.textBox_sujet_mail);
             this.groupBox1.Location = new System.Drawing.Point(502, 215);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 442);
+            this.groupBox1.Size = new System.Drawing.Size(300, 327);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Email";
@@ -202,7 +212,7 @@
             this.textBox_message_mail.Location = new System.Drawing.Point(9, 55);
             this.textBox_message_mail.Multiline = true;
             this.textBox_message_mail.Name = "textBox_message_mail";
-            this.textBox_message_mail.Size = new System.Drawing.Size(284, 381);
+            this.textBox_message_mail.Size = new System.Drawing.Size(284, 266);
             this.textBox_message_mail.TabIndex = 12;
             // 
             // groupBox2
@@ -238,38 +248,75 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(116, 12);
+            this.progressBar1.Location = new System.Drawing.Point(677, 12);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(894, 23);
+            this.progressBar1.Size = new System.Drawing.Size(577, 23);
             this.progressBar1.TabIndex = 14;
             // 
             // but_sauve
             // 
-            this.but_sauve.Location = new System.Drawing.Point(502, 663);
+            this.but_sauve.Location = new System.Drawing.Point(502, 548);
             this.but_sauve.Name = "but_sauve";
             this.but_sauve.Size = new System.Drawing.Size(299, 23);
             this.but_sauve.TabIndex = 15;
             this.but_sauve.Text = "Sauvegarde des modèles mail et attestation";
             this.but_sauve.UseVisualStyleBackColor = true;
-            this.but_sauve.Click += new System.EventHandler(this.buttonSauveMessage_Click);
+            this.but_sauve.Click += new System.EventHandler(this.ButtonSauveMessageClick);
             // 
             // button_TOUT_envoyer
             // 
             this.button_TOUT_envoyer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_TOUT_envoyer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.button_TOUT_envoyer.Location = new System.Drawing.Point(1095, 7);
+            this.button_TOUT_envoyer.Location = new System.Drawing.Point(433, 12);
             this.button_TOUT_envoyer.Name = "button_TOUT_envoyer";
-            this.button_TOUT_envoyer.Size = new System.Drawing.Size(141, 32);
+            this.button_TOUT_envoyer.Size = new System.Drawing.Size(238, 23);
             this.button_TOUT_envoyer.TabIndex = 16;
-            this.button_TOUT_envoyer.Text = "Envoyer";
+            this.button_TOUT_envoyer.Text = "Tout Envoyer OUTLOOK";
+            this.toolTip1.SetToolTip(this.button_TOUT_envoyer, "Tout générer et envoyer directement (Envoie des mails automatique)");
             this.button_TOUT_envoyer.UseVisualStyleBackColor = true;
-            this.button_TOUT_envoyer.Click += new System.EventHandler(this.button_envoyer_TOUT_Click);
+            this.button_TOUT_envoyer.Visible = false;
+            this.button_TOUT_envoyer.Click += new System.EventHandler(this.ButtonEnvoyerToutClick);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.ToolTipTitle = "Import du fichier";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(581, 618);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(200, 100);
+            this.tabControl1.TabIndex = 17;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(192, 74);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(192, 74);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1261, 698);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_TOUT_envoyer);
             this.Controls.Add(this.but_sauve);
             this.Controls.Add(this.progressBar1);
@@ -289,6 +336,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,6 +363,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button_TOUT_envoyer;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
