@@ -12,7 +12,7 @@ namespace AboMB12.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -49,7 +49,7 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ATTESTATION 2018")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ATTESTATION 2020")]
         public string Titre_PDF {
             get {
                 return ((string)(this["Titre_PDF"]));
@@ -64,25 +64,22 @@ namespace AboMB12.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute(@"Nous soussignés, la Société BM12 Informatique, certifions que,
                                         
                                         
-                     {RAISON_SOCIALE}
-                     {ADRESSE_LIGNE1}
-                     
-                     {CP} {VILLE}
-                                     
+                        {CIVILITE} {INTERLOCUTEUR}
+                    
                                          
- a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année,
- dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
- Enregistré sous le numéro 73 12 00583 12
- En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
+ a suivi une formation aux logiciels informatiques de {HEURE} heures, durant l'année 2020,
+ dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement,
+ enregistré sous le numéro 73 12 00583 12.
+ En foi de quoi, nous lui délivrons cette attestation pour lui servir
+ et faire valoir ce que de droit.
                                          
                                                                             
                                          
-                                      Les Vernhes, le 24/01/2018
+                                      Les Vernhes, le 13/02/2021
                                                                           
                                      
                                       Gérante BM12
-                                      Brigitte Mayanobe
-
+                                      Brigitte MAYANOBE
 ")]
         public string Corps_PDF {
             get {
@@ -95,7 +92,7 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Abonnement BM12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Attestation de Formation 2020  BM12")]
         public string Sujet_Mail {
             get {
                 return ((string)(this["Sujet_Mail"]));
@@ -107,8 +104,12 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Bonjour\r\n\r\n\r\nVeuilez trouver ci-joint votre attestation de formation.\r\n\r\n\r\nCordia" +
-            "lement,\r\nBrigitte Mayanobe")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<html>
+<p>Bonjour,</p>
+<p><br />Veuillez trouver ci-joint votre attestation de formation 2020.</p>
+<p><span style=""color: #008000;""><strong>Merci de communiquer rapidement cette attestation &agrave; votre comptable.</strong></span></p>
+<p><br />Cordialement,<br />Brigitte MAYANOBE</p>
+</html>")]
         public string Corps_Mail {
             get {
                 return ((string)(this["Corps_Mail"]));

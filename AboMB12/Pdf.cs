@@ -20,13 +20,26 @@ namespace AboMB12
         /// <returns></returns>
         public static string CreatePDF(int ligne, DataTable csvData, string textBox_titre_attestation, string textBox_message, string ExecutablePath)
         {
-            string RAISON_SOCIALE = csvData.Rows[ligne].ItemArray[1].ToString();
-            string ADRESSE_LIGNE1 = csvData.Rows[ligne].ItemArray[2].ToString();
-            string CP = csvData.Rows[ligne].ItemArray[3].ToString();
-            string VILLE = csvData.Rows[ligne].ItemArray[4].ToString();
-            string CIVILITE = csvData.Rows[ligne].ItemArray[8].ToString();
-            string INTERLOCUTEUR = csvData.Rows[ligne].ItemArray[9].ToString();
-            string HEURE = csvData.Rows[ligne].ItemArray[10].ToString();
+            int col = csvData.Columns["sCliRaisonSoc"].Ordinal;
+            string RAISON_SOCIALE = csvData.Rows[ligne].ItemArray[col].ToString();
+
+            col = csvData.Columns["sCliAdresse1Ligne"].Ordinal;
+            string ADRESSE_LIGNE1 = csvData.Rows[ligne].ItemArray[col].ToString();
+
+            col = csvData.Columns["sCliAdresse1CodePos"].Ordinal;
+            string CP = csvData.Rows[ligne].ItemArray[col].ToString();
+
+            col = csvData.Columns["sCliAdresse1Ville"].Ordinal;
+            string VILLE = csvData.Rows[ligne].ItemArray[col].ToString();
+
+            col = csvData.Columns["sContact.Civilite"].Ordinal;
+            string CIVILITE = csvData.Rows[ligne].ItemArray[col].ToString();
+
+            col = csvData.Columns["sContact.Interloc"].Ordinal;
+            string INTERLOCUTEUR = csvData.Rows[ligne].ItemArray[col].ToString();
+
+            col = csvData.Columns["heures"].Ordinal;
+            string HEURE = csvData.Rows[ligne].ItemArray[col].ToString();
 
             // Create a new PDF document
             PdfDocument document = new PdfDocument();
@@ -45,7 +58,6 @@ namespace AboMB12
             XFont font_titre = new XFont("Trebuchet MS", 14, XFontStyle.Bold);
 
             // Bloc adresse
-            //gfx.DrawString(CIVILITE + " " + INTERLOCUTEUR, font_normal, XBrushes.Black, new XRect(350, 100, 0, 0), XStringFormats.Default);
             gfx.DrawString(RAISON_SOCIALE, font_normal, XBrushes.Black, new XRect(350, 120, 0, 0), XStringFormats.Default);
             gfx.DrawString(ADRESSE_LIGNE1, font_normal, XBrushes.Black, new XRect(350, 140, 0, 0), XStringFormats.Default);
             gfx.DrawString(CP + " " + VILLE, font_normal, XBrushes.Black, new XRect(350, 160, 0, 0), XStringFormats.Default);

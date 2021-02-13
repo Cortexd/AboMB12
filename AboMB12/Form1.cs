@@ -1,8 +1,10 @@
 ﻿using AboMB12.Properties;
 using Microsoft.VisualBasic.FileIO;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -47,7 +49,7 @@ namespace AboMB12
         /// <param name="e"></param>
         private void Form1_Unload(object sender, FormClosingEventArgs e)
         {
-            ButtonSauveMessageClick(sender, e);
+            but_sauve_Click(sender, e);
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonImportCsvClick(object sender, EventArgs e)
+        private void btn_import_csv_Click(object sender, EventArgs e)
         {
             if (openFileDialogCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -68,7 +70,7 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonGenererAllBrouillon(object sender, EventArgs e)
+        private void bnt_generer_Click(object sender, EventArgs e)
         {
             progressBar1.Minimum = 0;
             progressBar1.Maximum = csvData.Rows.Count - 1;
@@ -78,7 +80,8 @@ namespace AboMB12
                 progressBar1.Value = i;
                 int ligne = i;
                 string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, csvData.Rows[ligne].ItemArray[7].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                int colonneEmail = csvData.Columns["sContact.EMail"].Ordinal;
+                OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, csvData.Rows[ligne].ItemArray[colonneEmail].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
             }
 
             MessageBox.Show($"Fin de génération des {csvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
@@ -90,7 +93,7 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonEnvoyerToutClick(object sender, EventArgs e)
+        private void button_TOUT_envoyer_Click(object sender, EventArgs e)
         {
             progressBar1.Minimum = 0;
             progressBar1.Maximum = csvData.Rows.Count - 1;
@@ -99,8 +102,9 @@ namespace AboMB12
             {
                 progressBar1.Value = i;
                 int ligne = i;
+                int colonneEmail = csvData.Columns["sContact.EMail"].Ordinal;
                 string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                OutlookHelper.CreateMailOutlookAvecPJAndSend(chemin_pdf, csvData.Rows[ligne].ItemArray[7].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                OutlookHelper.CreateMailOutlookAvecPJAndSend(chemin_pdf, csvData.Rows[ligne].ItemArray[colonneEmail].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
             }
 
             MessageBox.Show($"Fin de génération des {csvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
@@ -112,7 +116,7 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSauveMessageClick(object sender, EventArgs e)
+        private void but_sauve_Click(object sender, EventArgs e)
         {
             AboMB12.Properties.Settings.Default.Corps_PDF = textBox_message.Text;
             AboMB12.Properties.Settings.Default.Corps_Mail = textBox_message_mail.Text;
@@ -127,7 +131,7 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             //Pou eviter le clic sur les entetes
             if (e.RowIndex >= 0)
@@ -137,7 +141,8 @@ namespace AboMB12
                 {
                     int ligne = e.RowIndex;
                     string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, csvData.Rows[ligne].ItemArray[7].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                    int colonneEmail = csvData.Columns["sContact.EMail"].Ordinal;
+                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, csvData.Rows[ligne].ItemArray[colonneEmail].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
                 }
 
                 // PDF uniquement + ouverture automatique
@@ -219,11 +224,22 @@ namespace AboMB12
                     csvReader.HasFieldsEnclosedInQuotes = true;
                     string[] colFields = csvReader.ReadFields();
 
+                    int index = 0;
                     foreach (string column in colFields)
                     {
-                        DataColumn serialno = new DataColumn(column);
-                        serialno.AllowDBNull = true;
-                        csvData.Columns.Add(serialno);
+                        if (!csvData.Columns.Contains(column))
+                        {
+                            DataColumn serialno = new DataColumn(column);
+                            serialno.AllowDBNull = true;
+                            csvData.Columns.Add(serialno);
+                        }
+                        else
+                        {
+                            DataColumn serialno = new DataColumn(column + index);
+                            serialno.AllowDBNull = true;
+                            csvData.Columns.Add(serialno);
+                        }
+                        index++;
                     }
 
                     while (!csvReader.EndOfData)
@@ -239,11 +255,7 @@ namespace AboMB12
                             dr[i] = fieldData[i];
                         }
 
-                        // On importe pas le ligne ou l'heure est vide.
-                        if (!string.IsNullOrWhiteSpace(fieldData[10]))
-                        {
-                            csvData.Rows.Add(dr);
-                        }
+                        csvData.Rows.Add(dr);
                     }
                 }
             }
@@ -279,7 +291,7 @@ namespace AboMB12
             else
             {
                 // Format non conforme
-                MessageBox.Show("Le fichier n'est pas conforme. La 1er ligne doit être : sCliCode, sCliRaisonSoc, sCliAdresse1Ligne, sCliAdresse1CodePos, sCliAdresse1Ville, sContact.Tel, sContact.Portable, sContact.EMail, heures",
+                MessageBox.Show("Le fichier n'est pas conforme.",
                     "Critical Warning",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning,
@@ -304,45 +316,39 @@ namespace AboMB12
             {
                 // 1er ligne
                 // sCliCode sCliRaisonSoc   sCliAdresse1Ligne sCliAdresse1CodePos sCliAdresse1Ville sContact.Tel sContact.Portable sContact.EMail heures
-                string[] values;
+                string line;
+
                 using (var reader = new StreamReader(fileName))
                 {
-                    var line = reader.ReadLine().ToLower();
-                    values = line.Split(';');
+                    line = reader.ReadLine().ToLower();
                 }
 
-                if (values[0].Trim() != "sCliCode".ToLower())
+                if (!line.Contains("sCliCode".ToLower()))
                     return false;
 
-                if (values[1].Trim() != "sCliRaisonSoc".ToLower())
+                if (!line.Contains("sCliRaisonSoc".ToLower()))
                     return false;
 
-                if (values[2].Trim() != "sCliAdresse1Ligne".ToLower())
+                if (!line.Contains("sCliAdresse1Ligne".ToLower()))
                     return false;
 
-                if (values[3].Trim() != "sCliAdresse1CodePos".ToLower())
+                if (!line.Contains("sCliAdresse1CodePos".ToLower()))
                     return false;
 
-                if (values[4].Trim() != "sCliAdresse1Ville".ToLower())
+                if (!line.Contains("sCliAdresse1Ville".ToLower()))
                     return false;
 
-                if (values[5].Trim() != "sContact.Tel".ToLower())
+                if (!line.Contains("sContact.EMail".ToLower()))
                     return false;
 
-                if (values[6].Trim() != "sContact.Portable".ToLower())
+                if (!line.Contains("sContact.Civilite".ToLower()))
                     return false;
 
-                if (values[7].Trim() != "sContact.EMail".ToLower())
-                    return false;
-
-                if (values[8].Trim() != "sContact.Civilite".ToLower())
-                    return false;
-
-                if (values[9].Trim() != "sContact.Interloc".ToLower())
+                if (!line.Contains("sContact.Interloc".ToLower()))
                     return false;
 
                 // contient heure
-                if (!values[10].Contains("heur"))
+                if (!line.Contains("heur".ToLower()))
                     return false;
 
                 return true;
