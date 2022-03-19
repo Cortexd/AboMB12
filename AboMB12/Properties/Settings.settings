@@ -9,40 +9,48 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Titre_PDF" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ATTESTATION 2020</Value>
-    </Setting>
-    <Setting Name="Corps_PDF" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Nous soussignés, la Société BM12 Informatique, certifions que,
-                                        
-                                        
-                        {CIVILITE} {INTERLOCUTEUR}
-                    
-                                         
- a suivi une formation aux logiciels informatiques de {HEURE} heures, durant l'année 2020,
- dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement,
- enregistré sous le numéro 73 12 00583 12.
- En foi de quoi, nous lui délivrons cette attestation pour lui servir
- et faire valoir ce que de droit.
-                                         
-                                                                            
-                                         
-                                      Les Vernhes, le 13/02/2021
-                                                                          
-                                     
-                                      Gérante BM12
-                                      Brigitte MAYANOBE
-</Value>
+      <Value Profile="(Default)">ATTESTATION 20XX</Value>
     </Setting>
     <Setting Name="Sujet_Mail" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Attestation de Formation 2020  BM12</Value>
+      <Value Profile="(Default)">Abonnement BM12</Value>
+    </Setting>
+    <Setting Name="Corps_PDF" Type="System.String" Scope="User">
+      <Value Profile="(Default)">
+					Nous soussignés, la Société BM12 Informatique, certifions que,
+
+					{CIVILITE} {INTERLOCUTEUR}
+
+					a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année,
+					dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
+					Enregistré sous le numéro 73 12 00583 12
+					En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
+
+					Les Vernhes, le XX/XX/20XX
+
+					Gérante BM12
+					Brigitte Mayanobe
+				</Value>
     </Setting>
     <Setting Name="Corps_Mail" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;html&gt;
-&lt;p&gt;Bonjour,&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;Veuillez trouver ci-joint votre attestation de formation 2020.&lt;/p&gt;
-&lt;p&gt;&lt;span style="color: #008000;"&gt;&lt;strong&gt;Merci de communiquer rapidement cette attestation &amp;agrave; votre comptable.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;Cordialement,&lt;br /&gt;Brigitte MAYANOBE&lt;/p&gt;
-&lt;/html&gt;</Value>
+      <Value Profile="(Default)">
+					&lt;html&gt;
+					&lt;head&gt;
+					&lt;/head&gt;
+					&lt;body&gt;
+					&lt;div&gt;
+					&lt;p&gt;Bonjour,&lt;/p&gt;
+					&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+					&lt;p&gt;Veuillez trouver ci-joint votre attestation de formation 2020.&lt;/p&gt;
+					&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+					&lt;p&gt;&lt;b&gt;&lt;span style="color:#00B050"&gt;Merci de communiquer rapidement cette attestation à votre comptable.&lt;/span&gt;&lt;/b&gt;&lt;/p&gt;
+					&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+					&lt;p&gt;Cordialement,&lt;/p&gt;
+					&lt;p&gt;Brigitte MAYANOBE&lt;/p&gt;
+					&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+					&lt;/div&gt;
+					&lt;/body&gt;
+					&lt;/html&gt;
+				</Value>
     </Setting>
   </Settings>
 </SettingsFile>

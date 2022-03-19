@@ -12,7 +12,7 @@ namespace AboMB12.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -49,7 +49,7 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ATTESTATION 2020")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ATTESTATION 20XX")]
         public string Titre_PDF {
             get {
                 return ((string)(this["Titre_PDF"]));
@@ -61,38 +61,7 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Nous soussignés, la Société BM12 Informatique, certifions que,
-                                        
-                                        
-                        {CIVILITE} {INTERLOCUTEUR}
-                    
-                                         
- a suivi une formation aux logiciels informatiques de {HEURE} heures, durant l'année 2020,
- dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement,
- enregistré sous le numéro 73 12 00583 12.
- En foi de quoi, nous lui délivrons cette attestation pour lui servir
- et faire valoir ce que de droit.
-                                         
-                                                                            
-                                         
-                                      Les Vernhes, le 13/02/2021
-                                                                          
-                                     
-                                      Gérante BM12
-                                      Brigitte MAYANOBE
-")]
-        public string Corps_PDF {
-            get {
-                return ((string)(this["Corps_PDF"]));
-            }
-            set {
-                this["Corps_PDF"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Attestation de Formation 2020  BM12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Abonnement BM12")]
         public string Sujet_Mail {
             get {
                 return ((string)(this["Sujet_Mail"]));
@@ -104,12 +73,51 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<html>
-<p>Bonjour,</p>
-<p><br />Veuillez trouver ci-joint votre attestation de formation 2020.</p>
-<p><span style=""color: #008000;""><strong>Merci de communiquer rapidement cette attestation &agrave; votre comptable.</strong></span></p>
-<p><br />Cordialement,<br />Brigitte MAYANOBE</p>
-</html>")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"
+					Nous soussignés, la Société BM12 Informatique, certifions que,
+
+					{CIVILITE} {INTERLOCUTEUR}
+
+					a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année,
+					dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
+					Enregistré sous le numéro 73 12 00583 12
+					En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
+
+					Les Vernhes, le XX/XX/20XX
+
+					Gérante BM12
+					Brigitte Mayanobe
+				")]
+        public string Corps_PDF {
+            get {
+                return ((string)(this["Corps_PDF"]));
+            }
+            set {
+                this["Corps_PDF"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"
+					<html>
+					<head>
+					</head>
+					<body>
+					<div>
+					<p>Bonjour,</p>
+					<p>&nbsp;</p>
+					<p>Veuillez trouver ci-joint votre attestation de formation 2020.</p>
+					<p>&nbsp;</p>
+					<p><b><span style=""color:#00B050"">Merci de communiquer rapidement cette attestation à votre comptable.</span></b></p>
+					<p>&nbsp;</p>
+					<p>Cordialement,</p>
+					<p>Brigitte MAYANOBE</p>
+					<p>&nbsp;</p>
+					</div>
+					</body>
+					</html>
+				")]
         public string Corps_Mail {
             get {
                 return ((string)(this["Corps_Mail"]));

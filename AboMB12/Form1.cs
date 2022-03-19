@@ -1,8 +1,12 @@
 ﻿using AboMB12.Properties;
+using CsvHelper;
+using CsvHelper.Configuration;
+using FastMember;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,45 +16,17 @@ namespace AboMB12
 {
     public partial class Form1 : Form
     {
-        private const string lblHeaderGVBrouillonOutlook = "Brouillon outlook";
-        private const string lblButtonGVBrouillonOutlook = "Brouillon";
-        private const string lblHeaderGVTestPDF = "Visualiser l'attestation";
-        private const string lblButtonGVTestPDF = "Visu";
-
-        /// <summary>
-        /// Data csv
-        /// </summary>
-        private DataTable csvData;
-
         public Form1()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// Chargement
+        /// Data csv
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            textBox_message.Text = AboMB12.Properties.Settings.Default.Corps_PDF;
-            textBox_message_mail.Text = AboMB12.Properties.Settings.Default.Corps_Mail;
-            textBox_sujet_mail.Text = AboMB12.Properties.Settings.Default.Sujet_Mail;
-            textBox_titre_attestation.Text = AboMB12.Properties.Settings.Default.Titre_PDF;
+        private DataTable CsvData;
 
-            CleanTempDirectory();
-        }
-
-        /// <summary>
-        /// Déchargement de la page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Unload(object sender, FormClosingEventArgs e)
-        {
-            but_sauve_Click(sender, e);
-        }
+        private List<Attestation> Attestations;
 
         /// <summary>
         /// Import du CSV
@@ -61,124 +37,57 @@ namespace AboMB12
         {
             if (openFileDialogCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                // TODO : correction du chargement quand le fichier est ouver dans Excel
+                //string TempFile = Path.Combine(Path.GetTempFileName(), Path.GetRandomFileName());
+                //File.Copy(openFileDialogCSV.FileName, TempFile);
+                //ImporterFichier(TempFile);
                 ImporterFichier(openFileDialogCSV.FileName);
             }
         }
 
         /// <summary>
-        /// Generer tout les brouillons
+        /// Import du CSV
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void bnt_generer_Click(object sender, EventArgs e)
+        /// <param name="fileName"></param>
+        private void ImporterFichier(string fileName)
         {
-            progressBar1.Minimum = 0;
-            progressBar1.Maximum = csvData.Rows.Count - 1;
-
-            for (int i = 0; i < csvData.Rows.Count; i++)
+            //if (VerifierFichier(fileName))
+            if (true)
             {
-                progressBar1.Value = i;
-                int ligne = i;
-                string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                int colonneEmail = csvData.Columns["sContact.EMail"].Ordinal;
-                OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, csvData.Rows[ligne].ItemArray[colonneEmail].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
-            }
+                // recup depuis fichier
+                this.Attestations = CsvTools.GetObjectFromCSVFile(fileName).ToList();
 
-            MessageBox.Show($"Fin de génération des {csvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
-            progressBar1.Value = 0;
-        }
-
-        /// <summary>
-        /// Tout envoyer
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button_TOUT_envoyer_Click(object sender, EventArgs e)
-        {
-            progressBar1.Minimum = 0;
-            progressBar1.Maximum = csvData.Rows.Count - 1;
-
-            for (int i = 0; i < csvData.Rows.Count; i++)
-            {
-                progressBar1.Value = i;
-                int ligne = i;
-                int colonneEmail = csvData.Columns["sContact.EMail"].Ordinal;
-                string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                OutlookHelper.CreateMailOutlookAvecPJAndSend(chemin_pdf, csvData.Rows[ligne].ItemArray[colonneEmail].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
-            }
-
-            MessageBox.Show($"Fin de génération des {csvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
-            progressBar1.Value = 0;
-        }
-
-        /// <summary>
-        /// Sauvegarde modèle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void but_sauve_Click(object sender, EventArgs e)
-        {
-            AboMB12.Properties.Settings.Default.Corps_PDF = textBox_message.Text;
-            AboMB12.Properties.Settings.Default.Corps_Mail = textBox_message_mail.Text;
-            AboMB12.Properties.Settings.Default.Sujet_Mail = textBox_sujet_mail.Text;
-            AboMB12.Properties.Settings.Default.Titre_PDF = textBox_titre_attestation.Text;
-
-            Settings.Default.Save();
-        }
-
-        /// <summary>
-        /// Gestion du click sur les boutons du GV
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //Pou eviter le clic sur les entetes
-            if (e.RowIndex >= 0)
-            {
-                // PDF + Mail
-                if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == lblHeaderGVBrouillonOutlook)
+                DataTable table = new DataTable();
+                using (var reader = ObjectReader.Create(this.Attestations,
+                    "RaisonSociale", "AdresseLigne1", "AdresseCP", "AdresseVille", "Civilite", "Interlocuteur", "Email", "Heure"))
+                //using (var reader = ObjectReader.Create(this.Attestations))
                 {
-                    int ligne = e.RowIndex;
-                    string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                    int colonneEmail = csvData.Columns["sContact.EMail"].Ordinal;
-                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, csvData.Rows[ligne].ItemArray[colonneEmail].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                    table.Load(reader);
                 }
 
-                // PDF uniquement + ouverture automatique
-                if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == lblHeaderGVTestPDF)
-                {
-                    int ligne = e.RowIndex;
-                    string chemin_pdf = Pdf.CreatePDF(ligne, csvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                    System.Diagnostics.Process.Start(chemin_pdf);
-                }
+                // charge grid
+                //this.dataGridView1.DataSource = this.CsvData;
+                this.dataGridView1.DataSource = table;
+                this.dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                this.dataGridView1.Refresh();
+                AjouterBouttonGridview();
+
+                // Changer le label du bouton
+                bnt_generer.Visible = true;
             }
-        }
-
-        #region Tools
-
-        /// <summary>
-        /// Nettoyage rep temporaire
-        /// </summary>
-        private static void CleanTempDirectory()
-        {
-            // Vidage repertoire temporaire
-            try
+            else
             {
-                Directory.CreateDirectory(@".\Temp\");
-                DirectoryInfo di = new DirectoryInfo(@".\Temp\");
+                // Format non conforme
+                MessageBox.Show("Le fichier n'est pas conforme. La 1er ligne doit être : sCliCode, sCliRaisonSoc, sCliAdresse1Ligne, sCliAdresse1CodePos, sCliAdresse1Ville, sContact.Tel, sContact.Portable, sContact.EMail, heures",
+                    "Critical Warning",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1,
+                    MessageBoxOptions.RightAlign,
+                    true);
 
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
-            catch (Exception)
-            {
+                // Changer le label du bouton
+                bnt_generer.Visible = false;
             }
         }
 
@@ -192,17 +101,42 @@ namespace AboMB12
             {
                 DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
                 dataGridView1.Columns.Insert(0, btn);
-                btn.HeaderText = lblHeaderGVBrouillonOutlook;
-                btn.Text = lblButtonGVBrouillonOutlook;
-                btn.Name = "btnGVBrouillonOutlook";
+                btn.HeaderText = "Action";
+                btn.Text = "Mail + PDF";
+                btn.Name = "btn";
                 btn.UseColumnTextForButtonValue = true;
 
                 btn = new DataGridViewButtonColumn();
                 dataGridView1.Columns.Insert(1, btn);
-                btn.HeaderText = lblHeaderGVTestPDF;
-                btn.Text = lblButtonGVTestPDF;
-                btn.Name = "btnGVTestPDF";
+                btn.HeaderText = "Action pdf";
+                btn.Text = "PDF";
+                btn.Name = "btn";
                 btn.UseColumnTextForButtonValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Gestion du click sur les boutons du GV
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (e.ColumnIndex  == this.dataGridView1.ColumnCount - 1)
+            if (e.ColumnIndex >= 0)
+            {
+                if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action")
+                {
+                    int ligne = e.RowIndex;
+                    string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
+                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, CsvData.Rows[ligne].ItemArray[6].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                }
+                if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action pdf")
+                {
+                    int ligne = e.RowIndex;
+                    string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
+                    System.Diagnostics.Process.Start(chemin_pdf);
+                }
             }
         }
 
@@ -224,22 +158,11 @@ namespace AboMB12
                     csvReader.HasFieldsEnclosedInQuotes = true;
                     string[] colFields = csvReader.ReadFields();
 
-                    int index = 0;
                     foreach (string column in colFields)
                     {
-                        if (!csvData.Columns.Contains(column))
-                        {
-                            DataColumn serialno = new DataColumn(column);
-                            serialno.AllowDBNull = true;
-                            csvData.Columns.Add(serialno);
-                        }
-                        else
-                        {
-                            DataColumn serialno = new DataColumn(column + index);
-                            serialno.AllowDBNull = true;
-                            csvData.Columns.Add(serialno);
-                        }
-                        index++;
+                        DataColumn serialno = new DataColumn(column);
+                        serialno.AllowDBNull = true;
+                        csvData.Columns.Add(serialno);
                     }
 
                     while (!csvReader.EndOfData)
@@ -255,7 +178,11 @@ namespace AboMB12
                             dr[i] = fieldData[i];
                         }
 
-                        csvData.Rows.Add(dr);
+                        // On importe pas le ligne ou l'heure est vide.
+                        if (!string.IsNullOrWhiteSpace(fieldData[7]))
+                        {
+                            csvData.Rows.Add(dr);
+                        }
                     }
                 }
             }
@@ -267,106 +194,89 @@ namespace AboMB12
             return csvData;
         }
 
-        /// <summary>
-        /// Import du CSV
-        /// </summary>
-        /// <param name="fileName"></param>
-        private void ImporterFichier(string fileName)
+        private void bnt_generer_tous_brouillons_Click(object sender, EventArgs e)
         {
-            if (VerifierFichier(fileName))
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = CsvData.Rows.Count - 1;
+
+            for (int i = 0; i < CsvData.Rows.Count; i++)
             {
-                // recup depuis fichier
-                csvData = GetDataTabletFromCSVFile(fileName);
-
-                // charge grid
-                this.dataGridView1.DataSource = this.csvData;
-                this.dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-                this.dataGridView1.Refresh();
-                AjouterBouttonGridview();
-
-                // Changer le label du bouton
-                bnt_generer.Visible = true;
-                button_TOUT_envoyer.Visible = true;
+                progressBar1.Value = i;
+                int ligne = i;
+                string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
+                OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, CsvData.Rows[ligne].ItemArray[6].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
             }
-            else
-            {
-                // Format non conforme
-                MessageBox.Show("Le fichier n'est pas conforme.",
-                    "Critical Warning",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button1,
-                    MessageBoxOptions.RightAlign,
-                    true);
 
-                // Changer le label du bouton
-                bnt_generer.Visible = false;
-                button_TOUT_envoyer.Visible = false;
-            }
+            MessageBox.Show($"Fin de génération des {CsvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
+            progressBar1.Value = 0;
         }
 
-        /// <summary>
-        /// Verification de colonne du fichier
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        private bool VerifierFichier(string fileName)
+        private void button_envoyer_TOUT_Click(object sender, EventArgs e)
         {
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = CsvData.Rows.Count - 1;
+
+            for (int i = 0; i < CsvData.Rows.Count; i++)
+            {
+                progressBar1.Value = i;
+                int ligne = i;
+                string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
+                OutlookHelper.CreateMailOutlookAvecPJAndSend(chemin_pdf, CsvData.Rows[ligne].ItemArray[6].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+            }
+
+            MessageBox.Show($"Fin de génération des {CsvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
+            progressBar1.Value = 0;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            textBox_message.Text = AboMB12.Properties.Settings.Default.Corps_PDF;
+            textBox_message_mail.Text = AboMB12.Properties.Settings.Default.Corps_Mail;
+            textBox_sujet_mail.Text = AboMB12.Properties.Settings.Default.Sujet_Mail;
+            textBox_titre_attestation.Text = AboMB12.Properties.Settings.Default.Titre_PDF;
+
+            // Vidage repertoire temporaire
             try
             {
-                // 1er ligne
-                // sCliCode sCliRaisonSoc   sCliAdresse1Ligne sCliAdresse1CodePos sCliAdresse1Ville sContact.Tel sContact.Portable sContact.EMail heures
-                string line;
+                System.IO.Directory.CreateDirectory(@".\Temp\");
+                System.IO.DirectoryInfo di = new DirectoryInfo(@".\Temp\");
 
-                using (var reader = new StreamReader(fileName))
+                foreach (FileInfo file in di.GetFiles())
                 {
-                    line = reader.ReadLine().ToLower();
+                    file.Delete();
                 }
-
-                if (!line.Contains("sCliCode".ToLower()))
-                    return false;
-
-                if (!line.Contains("sCliRaisonSoc".ToLower()))
-                    return false;
-
-                if (!line.Contains("sCliAdresse1Ligne".ToLower()))
-                    return false;
-
-                if (!line.Contains("sCliAdresse1CodePos".ToLower()))
-                    return false;
-
-                if (!line.Contains("sCliAdresse1Ville".ToLower()))
-                    return false;
-
-                if (!line.Contains("sContact.EMail".ToLower()))
-                    return false;
-
-                if (!line.Contains("sContact.Civilite".ToLower()))
-                    return false;
-
-                if (!line.Contains("sContact.Interloc".ToLower()))
-                    return false;
-
-                // contient heure
-                if (!line.Contains("heur".ToLower()))
-                    return false;
-
-                return true;
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
             }
             catch (Exception)
             {
-                // Format non conforme
-                MessageBox.Show("Erreur de lecture du fichier CSV. N'est il pas ouvert dans Excel ?",
-                    "Critical Warning",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button1,
-                    MessageBoxOptions.RightAlign,
-                    true);
-                return false;
             }
         }
 
-        #endregion Tools
+        /// <summary>
+        /// Sauvegarde modèle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSauveMessage_Click(object sender, EventArgs e)
+        {
+            AboMB12.Properties.Settings.Default.Corps_PDF = textBox_message.Text;
+            AboMB12.Properties.Settings.Default.Corps_Mail = textBox_message_mail.Text;
+            AboMB12.Properties.Settings.Default.Sujet_Mail = textBox_sujet_mail.Text;
+            AboMB12.Properties.Settings.Default.Titre_PDF = textBox_titre_attestation.Text;
+
+            Settings.Default.Save();
+        }
+
+        private void Form1_Unload(object sender, FormClosingEventArgs e)
+        {
+            buttonSauveMessage_Click(sender, e);
+        }
+
+        private void openFileDialogCSV_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+        }
     }
 }
