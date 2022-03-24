@@ -8,7 +8,6 @@ using CsvHelper.Configuration.Attributes;
 
 namespace AboMB12
 {
-
     /// <summary>
     /// Classe de mappage du CSV
     /// </summary>

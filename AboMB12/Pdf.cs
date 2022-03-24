@@ -11,6 +11,9 @@ using PdfSharp.Pdf;
 
 namespace AboMB12
 {
+    /// <summary>
+    /// Classe de gestion des pdf
+    /// </summary>
     public static class Pdf
     {
         /// <summary>
@@ -19,9 +22,9 @@ namespace AboMB12
         /// <param name="attestation"></param>
         /// <param name="textBox_titre_attestation"></param>
         /// <param name="textBox_message"></param>
-        /// <param name="ExecutablePath"></param>
+        /// <param name="executablePath"></param>
         /// <returns>Chemin du fichier généré</returns>
-        public static string CreatePDF(KeyValuePair<int, Attestation> attestation, string textBox_titre_attestation, string textBox_message, string ExecutablePath)
+        public static string CreatePDF(KeyValuePair<int, Attestation> attestation, string textBox_titre_attestation, string textBox_message, string executablePath)
         {
             // Create a new PDF document
             PdfSharp.Pdf.PdfDocument document = new PdfDocument();
@@ -58,14 +61,12 @@ namespace AboMB12
             message = message.Replace("{INTERLOCUTEUR}", attestation.Value.Interlocuteur);
 
             XRect rect = new XRect(50, 350, 500, 400);
-            //gfx.DrawRectangle(XBrushes.SeaShell, rect);
 
+            // gfx.DrawRectangle(XBrushes.SeaShell, rect);
             XTextFormatter tf = new XTextFormatter(gfx);
             tf.DrawString(message, font_normal, XBrushes.Black, rect, XStringFormats.TopLeft);
-            //gfx.DrawString(message, font_normal, XBrushes.Black, rect, XStringFormats.TopLeft);
 
-            // Save the document...
-
+            // gfx.DrawString(message, font_normal, XBrushes.Black, rect, XStringFormats.TopLeft);
             string filename = $"{textBox_titre_attestation}-{attestation.Key}-{attestation.Value.RaisonSociale}.pdf";
 
             filename = CleanBadChar(filename);
@@ -74,10 +75,7 @@ namespace AboMB12
 
             document.Save(@".\Temp\" + filename);
 
-            //Process.Start(filename);
-            //return @".\Temp\" + filename;
-
-            return Path.GetDirectoryName(ExecutablePath) + @"\Temp\" + filename;
+            return Path.GetDirectoryName(executablePath) + @"\Temp\" + filename;
         }
 
         /// <summary>
@@ -99,7 +97,7 @@ namespace AboMB12
         /// Nettoyage des caractéres spéciaux
         /// </summary>
         /// <param name="filename"></param>
-        /// <returns></returns>
+        /// <returns>chaine nettoyée</returns>
         private static string CleanBadChar(string filename)
         {
             string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());

@@ -14,19 +14,18 @@ namespace AboMB12
     /// Form1
     /// </summary>
     public partial class Form1 : Form
-    {
+    { /// <summary>
+      /// Stockage des attestations (infos du CSV)
+      /// </summary>
+        private Dictionary<int, Attestation> attestations;
+
         /// <summary>
-        /// Form1
+        /// Initializes a new instance of the <see cref="Form1"/> class.
         /// </summary>
         public Form1()
         {
             this.InitializeComponent();
         }
-
-        /// <summary>
-        /// Stockage des attestations (infos du CSV)
-        /// </summary>
-        private Dictionary<int, Attestation> Attestations;
 
         /// <summary>
         /// Import du CSV
@@ -55,10 +54,10 @@ namespace AboMB12
             if (true)
             {
                 // recup depuis fichier
-                this.Attestations = CsvTools.GetObjectFromCSVFile(fileName);
+                this.attestations = CsvTools.GetObjectFromCSVFile(fileName);
 
                 DataTable table = new DataTable();
-                using (var reader = ObjectReader.Create(this.Attestations, "RaisonSociale", "AdresseLigne1", "AdresseCP", "AdresseVille", "Civilite", "Interlocuteur", "Email", "Heure"))
+                using (var reader = ObjectReader.Create(this.attestations.Values, "RaisonSociale", "AdresseLigne1", "AdresseCP", "AdresseVille", "Civilite", "Interlocuteur", "Email", "Heure"))
                 {
                     table.Load(reader);
                 }
@@ -76,7 +75,8 @@ namespace AboMB12
             else
             {
                 // Format non conforme
-                MessageBox.Show("Le fichier n'est pas conforme. La 1er ligne doit être : sCliCode, sCliRaisonSoc, sCliAdresse1Ligne, sCliAdresse1CodePos, sCliAdresse1Ville, sContact.Tel, sContact.Portable, sContact.EMail, heures",
+                MessageBox.Show(
+                    "Le fichier n'est pas conforme. La 1er ligne doit être : sCliCode, sCliRaisonSoc, sCliAdresse1Ligne, sCliAdresse1CodePos, sCliAdresse1Ville, sContact.Tel, sContact.Portable, sContact.EMail, heures",
                     "Critical Warning",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning,
@@ -124,7 +124,7 @@ namespace AboMB12
             if (e.ColumnIndex >= 0)
             {
                 int ligne = e.RowIndex;
-                KeyValuePair<int, Attestation> attestation = new KeyValuePair<int, Attestation>(ligne, this.Attestations[ligne]);
+                KeyValuePair<int, Attestation> attestation = new KeyValuePair<int, Attestation>(ligne, this.attestations[ligne]);
 
                 if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action")
                 {
@@ -141,60 +141,6 @@ namespace AboMB12
         }
 
         /// <summary>
-        /// Chargement data table depuis cSV
-        /// on vire le ligne sans heures
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static DataTable GetDataTabletFromCSVFile(string path)
-        {
-            DataTable csvData = new DataTable();
-
-            try
-            {
-                using (TextFieldParser csvReader = new TextFieldParser(path, Encoding.Default))
-                {
-                    csvReader.SetDelimiters(new string[] { ";" });
-                    csvReader.HasFieldsEnclosedInQuotes = true;
-                    string[] colFields = csvReader.ReadFields();
-
-                    foreach (string column in colFields)
-                    {
-                        DataColumn serialno = new DataColumn(column);
-                        serialno.AllowDBNull = true;
-                        csvData.Columns.Add(serialno);
-                    }
-
-                    while (!csvReader.EndOfData)
-                    {
-                        string[] fieldData = csvReader.ReadFields();
-
-                        DataRow dr = csvData.NewRow();
-                        for (int i = 0; i < fieldData.Length; i++)
-                        {
-                            if (fieldData[i] == null)
-                                fieldData[i] = string.Empty;
-
-                            dr[i] = fieldData[i];
-                        }
-
-                        // On importe pas le ligne ou l'heure est vide.
-                        if (!string.IsNullOrWhiteSpace(fieldData[7]))
-                        {
-                            csvData.Rows.Add(dr);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erreur de lecture csv :" + ex.Message, "Erreur",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return csvData;
-        }
-
-        /// <summary>
         /// Generation des attestations PDF + brouillon email
         /// </summary>
         /// <param name="sender"></param>
@@ -202,10 +148,10 @@ namespace AboMB12
         private void Bnt_generer_tous_brouillons_Click(object sender, EventArgs e)
         {
             this.progressBar1.Minimum = 0;
-            this.progressBar1.Maximum = this.Attestations.Count - 1;
+            this.progressBar1.Maximum = this.attestations.Count - 1;
 
             int idxProgress = 0;
-            foreach (var attestation in this.Attestations)
+            foreach (var attestation in this.attestations)
             {
                 this.progressBar1.Value = idxProgress;
                 idxProgress++;
@@ -226,10 +172,10 @@ namespace AboMB12
         private void Button_envoyer_TOUT_Click(object sender, EventArgs e)
         {
             this.progressBar1.Minimum = 0;
-            this.progressBar1.Maximum = this.Attestations.Count - 1;
+            this.progressBar1.Maximum = this.attestations.Count - 1;
 
             int idxProgress = 0;
-            foreach (var attestation in this.Attestations)
+            foreach (var attestation in this.attestations)
             {
                 this.progressBar1.Value = idxProgress;
                 idxProgress++;

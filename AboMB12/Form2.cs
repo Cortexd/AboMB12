@@ -10,16 +10,17 @@ using System.Windows.Forms;
 
 namespace AboMB12
 {
+    /// <summary>
+    /// Form2
+    /// </summary>
     public partial class Form2 : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Form2"/> class.
+        /// </summary>
         public Form2()
         {
-            InitializeComponent();
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            this.InitializeComponent();
         }
     }
 }

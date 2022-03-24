@@ -6,13 +6,16 @@ using System.Windows.Forms;
 
 namespace AboMB12
 {
-    static class Program
+    /// <summary>
+    /// Gestion des attestation BM12
+    /// </summary>
+    internal static class Program
     {
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
