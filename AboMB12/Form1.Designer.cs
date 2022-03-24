@@ -65,7 +65,7 @@
             this.btn_import_csv.TabIndex = 0;
             this.btn_import_csv.Text = "Importer CSV";
             this.btn_import_csv.UseVisualStyleBackColor = true;
-            this.btn_import_csv.Click += new System.EventHandler(this.btn_import_csv_Click);
+            this.btn_import_csv.Click += new System.EventHandler(this.Btn_import_csv_Click);
             // 
             // dataGridView1
             // 
@@ -104,7 +104,7 @@
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.Size = new System.Drawing.Size(1242, 168);
             this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellClick);
             // 
             // bnt_generer
             // 
@@ -116,12 +116,12 @@
             this.bnt_generer.Text = "Brouillons";
             this.bnt_generer.UseVisualStyleBackColor = true;
             this.bnt_generer.Visible = false;
-            this.bnt_generer.Click += new System.EventHandler(this.bnt_generer_tous_brouillons_Click);
+            this.bnt_generer.Click += new System.EventHandler(this.Bnt_generer_tous_brouillons_Click);
             // 
             // openFileDialogCSV
             // 
             this.openFileDialogCSV.Filter = "Fichiers CSV|*.csv|Tous les fichiers|*.*";
-            this.openFileDialogCSV.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialogCSV_FileOk);
+            this.openFileDialogCSV.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialogCSV_FileOk);
             // 
             // openFileDialogRTF
             // 
@@ -252,7 +252,7 @@
             this.but_sauve.TabIndex = 15;
             this.but_sauve.Text = "Sauvegarde des modèles mail et attestation";
             this.but_sauve.UseVisualStyleBackColor = true;
-            this.but_sauve.Click += new System.EventHandler(this.buttonSauveMessage_Click);
+            this.but_sauve.Click += new System.EventHandler(this.ButtonSauveMessage_Click);
             // 
             // button_TOUT_envoyer
             // 
@@ -264,7 +264,7 @@
             this.button_TOUT_envoyer.TabIndex = 16;
             this.button_TOUT_envoyer.Text = "Envoyer";
             this.button_TOUT_envoyer.UseVisualStyleBackColor = true;
-            this.button_TOUT_envoyer.Click += new System.EventHandler(this.button_envoyer_TOUT_Click);
+            this.button_TOUT_envoyer.Click += new System.EventHandler(this.Button_envoyer_TOUT_Click);
             // 
             // Form1
             // 

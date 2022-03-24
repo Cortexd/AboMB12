@@ -1,47 +1,47 @@
-﻿using AboMB12.Properties;
-using CsvHelper;
-using CsvHelper.Configuration;
-using FastMember;
-using Microsoft.VisualBasic.FileIO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AboMB12.Properties;
+using FastMember;
+using Microsoft.VisualBasic.FileIO;
 
 namespace AboMB12
 {
+    /// <summary>
+    /// Form1
+    /// </summary>
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Form1
+        /// </summary>
         public Form1()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         /// <summary>
-        /// Data csv
+        /// Stockage des attestations (infos du CSV)
         /// </summary>
-        private DataTable CsvData;
-
-        private List<Attestation> Attestations;
+        private Dictionary<int, Attestation> Attestations;
 
         /// <summary>
         /// Import du CSV
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_import_csv_Click(object sender, EventArgs e)
+        private void Btn_import_csv_Click(object sender, EventArgs e)
         {
-            if (openFileDialogCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (this.openFileDialogCSV.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 // TODO : correction du chargement quand le fichier est ouver dans Excel
                 //string TempFile = Path.Combine(Path.GetTempFileName(), Path.GetRandomFileName());
                 //File.Copy(openFileDialogCSV.FileName, TempFile);
                 //ImporterFichier(TempFile);
-                ImporterFichier(openFileDialogCSV.FileName);
+                this.ImporterFichier(this.openFileDialogCSV.FileName);
             }
         }
 
@@ -55,25 +55,23 @@ namespace AboMB12
             if (true)
             {
                 // recup depuis fichier
-                this.Attestations = CsvTools.GetObjectFromCSVFile(fileName).ToList();
+                this.Attestations = CsvTools.GetObjectFromCSVFile(fileName);
 
                 DataTable table = new DataTable();
-                using (var reader = ObjectReader.Create(this.Attestations,
-                    "RaisonSociale", "AdresseLigne1", "AdresseCP", "AdresseVille", "Civilite", "Interlocuteur", "Email", "Heure"))
-                //using (var reader = ObjectReader.Create(this.Attestations))
+                using (var reader = ObjectReader.Create(this.Attestations, "RaisonSociale", "AdresseLigne1", "AdresseCP", "AdresseVille", "Civilite", "Interlocuteur", "Email", "Heure"))
                 {
                     table.Load(reader);
                 }
 
-                // charge grid
-                //this.dataGridView1.DataSource = this.CsvData;
                 this.dataGridView1.DataSource = table;
                 this.dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
                 this.dataGridView1.Refresh();
-                AjouterBouttonGridview();
+
+                // Ajout des boutons de manipulation
+                this.AjouterBouttonGridview();
 
                 // Changer le label du bouton
-                bnt_generer.Visible = true;
+                this.bnt_generer.Visible = true;
             }
             else
             {
@@ -87,7 +85,7 @@ namespace AboMB12
                     true);
 
                 // Changer le label du bouton
-                bnt_generer.Visible = false;
+                this.bnt_generer.Visible = false;
             }
         }
 
@@ -97,17 +95,17 @@ namespace AboMB12
         private void AjouterBouttonGridview()
         {
             // Si elle n'existe pas
-            if (dataGridView1.Columns[0].HeaderText != "Action")
+            if (this.dataGridView1.Columns[0].HeaderText != "Action")
             {
                 DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-                dataGridView1.Columns.Insert(0, btn);
+                this.dataGridView1.Columns.Insert(0, btn);
                 btn.HeaderText = "Action";
                 btn.Text = "Mail + PDF";
                 btn.Name = "btn";
                 btn.UseColumnTextForButtonValue = true;
 
                 btn = new DataGridViewButtonColumn();
-                dataGridView1.Columns.Insert(1, btn);
+                this.dataGridView1.Columns.Insert(1, btn);
                 btn.HeaderText = "Action pdf";
                 btn.Text = "PDF";
                 btn.Name = "btn";
@@ -120,21 +118,23 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //if (e.ColumnIndex  == this.dataGridView1.ColumnCount - 1)
             if (e.ColumnIndex >= 0)
             {
+                int ligne = e.RowIndex;
+                KeyValuePair<int, Attestation> attestation = new KeyValuePair<int, Attestation>(ligne, this.Attestations[ligne]);
+
                 if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action")
                 {
-                    int ligne = e.RowIndex;
-                    string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, CsvData.Rows[ligne].ItemArray[6].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                    string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
+                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, attestation.Value.Email, this.textBox_sujet_mail.Text, this.textBox_message_mail.Text);
                 }
+
                 if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action pdf")
                 {
-                    int ligne = e.RowIndex;
-                    string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
+                    string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
                     System.Diagnostics.Process.Start(chemin_pdf);
                 }
             }
@@ -194,46 +194,60 @@ namespace AboMB12
             return csvData;
         }
 
-        private void bnt_generer_tous_brouillons_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Generation des attestations PDF + brouillon email
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Bnt_generer_tous_brouillons_Click(object sender, EventArgs e)
         {
-            progressBar1.Minimum = 0;
-            progressBar1.Maximum = CsvData.Rows.Count - 1;
+            this.progressBar1.Minimum = 0;
+            this.progressBar1.Maximum = this.Attestations.Count - 1;
 
-            for (int i = 0; i < CsvData.Rows.Count; i++)
+            int idxProgress = 0;
+            foreach (var attestation in this.Attestations)
             {
-                progressBar1.Value = i;
-                int ligne = i;
-                string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, CsvData.Rows[ligne].ItemArray[6].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                this.progressBar1.Value = idxProgress;
+                idxProgress++;
+
+                string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
+                OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, attestation.Value.Email, this.textBox_sujet_mail.Text, this.textBox_message_mail.Text);
             }
 
-            MessageBox.Show($"Fin de génération des {CsvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
-            progressBar1.Value = 0;
+            MessageBox.Show($"Fin de génération des {idxProgress} mails.", "Terminé", MessageBoxButtons.OK);
+            this.progressBar1.Value = 0;
         }
 
-        private void button_envoyer_TOUT_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Generation des attestations PDF + email + envoi
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_envoyer_TOUT_Click(object sender, EventArgs e)
         {
-            progressBar1.Minimum = 0;
-            progressBar1.Maximum = CsvData.Rows.Count - 1;
+            this.progressBar1.Minimum = 0;
+            this.progressBar1.Maximum = this.Attestations.Count - 1;
 
-            for (int i = 0; i < CsvData.Rows.Count; i++)
+            int idxProgress = 0;
+            foreach (var attestation in this.Attestations)
             {
-                progressBar1.Value = i;
-                int ligne = i;
-                string chemin_pdf = Pdf.CreatePDF(ligne, CsvData, textBox_titre_attestation.Text, textBox_message.Text, Application.ExecutablePath);
-                OutlookHelper.CreateMailOutlookAvecPJAndSend(chemin_pdf, CsvData.Rows[ligne].ItemArray[6].ToString(), textBox_sujet_mail.Text, textBox_message_mail.Text);
+                this.progressBar1.Value = idxProgress;
+                idxProgress++;
+
+                string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
+                OutlookHelper.CreateMailOutlookAvecPJAndSend(chemin_pdf, attestation.Value.Email, this.textBox_sujet_mail.Text, this.textBox_message_mail.Text);
             }
 
-            MessageBox.Show($"Fin de génération des {CsvData.Rows.Count} mails.", "Terminé", MessageBoxButtons.OK);
-            progressBar1.Value = 0;
+            MessageBox.Show($"Fin de génération des {idxProgress} mails.", "Terminé", MessageBoxButtons.OK);
+            this.progressBar1.Value = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox_message.Text = AboMB12.Properties.Settings.Default.Corps_PDF;
-            textBox_message_mail.Text = AboMB12.Properties.Settings.Default.Corps_Mail;
-            textBox_sujet_mail.Text = AboMB12.Properties.Settings.Default.Sujet_Mail;
-            textBox_titre_attestation.Text = AboMB12.Properties.Settings.Default.Titre_PDF;
+            this.textBox_message.Text = AboMB12.Properties.Settings.Default.Corps_PDF;
+            this.textBox_message_mail.Text = AboMB12.Properties.Settings.Default.Corps_Mail;
+            this.textBox_sujet_mail.Text = AboMB12.Properties.Settings.Default.Sujet_Mail;
+            this.textBox_titre_attestation.Text = AboMB12.Properties.Settings.Default.Titre_PDF;
 
             // Vidage repertoire temporaire
             try
@@ -245,6 +259,7 @@ namespace AboMB12
                 {
                     file.Delete();
                 }
+
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
                     dir.Delete(true);
@@ -260,22 +275,22 @@ namespace AboMB12
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonSauveMessage_Click(object sender, EventArgs e)
+        private void ButtonSauveMessage_Click(object sender, EventArgs e)
         {
-            AboMB12.Properties.Settings.Default.Corps_PDF = textBox_message.Text;
-            AboMB12.Properties.Settings.Default.Corps_Mail = textBox_message_mail.Text;
-            AboMB12.Properties.Settings.Default.Sujet_Mail = textBox_sujet_mail.Text;
-            AboMB12.Properties.Settings.Default.Titre_PDF = textBox_titre_attestation.Text;
+            AboMB12.Properties.Settings.Default.Corps_PDF = this.textBox_message.Text;
+            AboMB12.Properties.Settings.Default.Corps_Mail = this.textBox_message_mail.Text;
+            AboMB12.Properties.Settings.Default.Sujet_Mail = this.textBox_sujet_mail.Text;
+            AboMB12.Properties.Settings.Default.Titre_PDF = this.textBox_titre_attestation.Text;
 
             Settings.Default.Save();
         }
 
         private void Form1_Unload(object sender, FormClosingEventArgs e)
         {
-            buttonSauveMessage_Click(sender, e);
+            this.ButtonSauveMessage_Click(sender, e);
         }
 
-        private void openFileDialogCSV_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OpenFileDialogCSV_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
         }
     }

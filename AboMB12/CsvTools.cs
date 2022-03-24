@@ -1,6 +1,4 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace AboMB12
 {
@@ -73,9 +73,9 @@ namespace AboMB12
             }
         }
 
-        public static List<Attestation> GetObjectFromCSVFile(string fileName)
+        public static Dictionary<int, Attestation> GetObjectFromCSVFile(string fileName)
         {
-            List<Attestation> retour = new List<Attestation>();
+            Dictionary<int, Attestation> retour = new Dictionary<int, Attestation>();
 
             try
             {
@@ -90,9 +90,11 @@ namespace AboMB12
                     csv.Context.RegisterClassMap<AttestationMap>();
                     var records = csv.GetRecords<Attestation>();
 
+                    int cleDico = 0;
                     foreach (var record in records)
                     {
-                        retour.Add(record);
+                        retour.Add(cleDico, record);
+                        cleDico++;
                     }
                 }
             }

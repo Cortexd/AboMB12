@@ -1,36 +1,31 @@
-﻿using PdfSharp.Drawing;
-using PdfSharp.Drawing.Layout;
-using PdfSharp.Pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
+using PdfSharp.Pdf;
 
 namespace AboMB12
 {
     public static class Pdf
     {
         /// <summary>
-        /// Creation du PDF
+        /// CreatePDF
         /// </summary>
-        /// <param name="ligne"></param>
-        /// <returns></returns>
-        public static string CreatePDF(int ligne, DataTable csvData, string textBox_titre_attestation, string textBox_message, string ExecutablePath)
+        /// <param name="attestation"></param>
+        /// <param name="textBox_titre_attestation"></param>
+        /// <param name="textBox_message"></param>
+        /// <param name="ExecutablePath"></param>
+        /// <returns>Chemin du fichier généré</returns>
+        public static string CreatePDF(KeyValuePair<int, Attestation> attestation, string textBox_titre_attestation, string textBox_message, string ExecutablePath)
         {
-            string RAISON_SOCIALE = csvData.Rows[ligne].ItemArray[0].ToString();
-            string ADRESSE_LIGNE1 = csvData.Rows[ligne].ItemArray[1].ToString();
-            string CP = csvData.Rows[ligne].ItemArray[2].ToString();
-            string VILLE = csvData.Rows[ligne].ItemArray[3].ToString();
-            string CIVILITE = csvData.Rows[ligne].ItemArray[4].ToString();
-            string INTERLOCUTEUR = csvData.Rows[ligne].ItemArray[5].ToString();
-            string HEURE = csvData.Rows[ligne].ItemArray[7].ToString();
-
             // Create a new PDF document
             PdfSharp.Pdf.PdfDocument document = new PdfDocument();
-            document.Info.Title = $"abonnement {RAISON_SOCIALE}";
+            document.Info.Title = $"abonnement {attestation.Value.RaisonSociale}";
 
             // Create an empty page
             PdfPage page = document.AddPage();
@@ -46,21 +41,21 @@ namespace AboMB12
 
             // Bloc adresse
             //gfx.DrawString(CIVILITE + " " + INTERLOCUTEUR, font_normal, XBrushes.Black, new XRect(350, 100, 0, 0), XStringFormats.Default);
-            gfx.DrawString(RAISON_SOCIALE, font_normal, XBrushes.Black, new XRect(350, 120, 0, 0), XStringFormats.Default);
-            gfx.DrawString(ADRESSE_LIGNE1, font_normal, XBrushes.Black, new XRect(350, 140, 0, 0), XStringFormats.Default);
-            gfx.DrawString(CP + " " + VILLE, font_normal, XBrushes.Black, new XRect(350, 160, 0, 0), XStringFormats.Default);
+            gfx.DrawString(attestation.Value.RaisonSociale, font_normal, XBrushes.Black, new XRect(350, 120, 0, 0), XStringFormats.Default);
+            gfx.DrawString(attestation.Value.AdresseLigne1, font_normal, XBrushes.Black, new XRect(350, 140, 0, 0), XStringFormats.Default);
+            gfx.DrawString(attestation.Value.AdresseCP + " " + attestation.Value.AdresseVille, font_normal, XBrushes.Black, new XRect(350, 160, 0, 0), XStringFormats.Default);
 
             // Titre
             gfx.DrawString(textBox_titre_attestation, font_titre, XBrushes.Black, new XRect(240, 300, 0, 0), XStringFormats.Default);
 
             string message = textBox_message;
-            message = message.Replace("{RAISON_SOCIALE}", RAISON_SOCIALE);
-            message = message.Replace("{ADRESSE_LIGNE1}", ADRESSE_LIGNE1);
-            message = message.Replace("{CP}", CP);
-            message = message.Replace("{VILLE}", VILLE);
-            message = message.Replace("{HEURE}", HEURE);
-            message = message.Replace("{CIVILITE}", CIVILITE);
-            message = message.Replace("{INTERLOCUTEUR}", INTERLOCUTEUR);
+            message = message.Replace("{RAISON_SOCIALE}", attestation.Value.RaisonSociale);
+            message = message.Replace("{ADRESSE_LIGNE1}", attestation.Value.AdresseLigne1);
+            message = message.Replace("{CP}", attestation.Value.AdresseCP);
+            message = message.Replace("{VILLE}", attestation.Value.AdresseVille);
+            message = message.Replace("{HEURE}", attestation.Value.Heure);
+            message = message.Replace("{CIVILITE}", attestation.Value.Civilite);
+            message = message.Replace("{INTERLOCUTEUR}", attestation.Value.Interlocuteur);
 
             XRect rect = new XRect(50, 350, 500, 400);
             //gfx.DrawRectangle(XBrushes.SeaShell, rect);
@@ -71,7 +66,7 @@ namespace AboMB12
 
             // Save the document...
 
-            string filename = $"{textBox_titre_attestation}-{ligne}-{RAISON_SOCIALE}.pdf";
+            string filename = $"{textBox_titre_attestation}-{attestation.Key}-{attestation.Value.RaisonSociale}.pdf";
 
             filename = CleanBadChar(filename);
 
@@ -94,7 +89,7 @@ namespace AboMB12
         /// <param name="y"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        static private void DrawImage(XGraphics gfx, string jpegSamplePath, int x, int y, int width, int height)
+        private static void DrawImage(XGraphics gfx, string jpegSamplePath, int x, int y, int width, int height)
         {
             XImage image = XImage.FromFile(jpegSamplePath);
             gfx.DrawImage(image, x, y, width, height);
@@ -105,7 +100,7 @@ namespace AboMB12
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        static private string CleanBadChar(string filename)
+        private static string CleanBadChar(string filename)
         {
             string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
 
