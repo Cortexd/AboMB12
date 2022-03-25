@@ -25,6 +25,27 @@ namespace AboMB12
         public Form1()
         {
             this.InitializeComponent();
+
+            //this.webBrowser1.Navigate("");
+
+            //Application.DoEvents();
+
+            //this.webBrowser1.Document.OpenNew(false).Write(@"<html><body><div id=""editable"">Edit this text</div></body></html>");
+
+            ////'turns off document body editing
+            //foreach (HtmlElement item in this.webBrowser1.Document.All)
+            //{
+            //    item.SetAttribute("unselectable", "on");
+            //    item.SetAttribute("contenteditable", "true");
+            //    item.SetAttribute("width", this.Width + "px");
+            //    item.SetAttribute("height", "100%");
+            //    item.SetAttribute("contenteditable", "true");
+            //}
+
+            ////'turns on edit mode
+            ////this.webBrowser1.ActiveXInstance = "On";
+            ////'stops right click->Browse View
+            //this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
         }
 
         /// <summary>
@@ -120,23 +141,34 @@ namespace AboMB12
         /// <param name="e"></param>
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (e.ColumnIndex  == this.dataGridView1.ColumnCount - 1)
-            if (e.ColumnIndex >= 0)
+            try
             {
-                int ligne = e.RowIndex;
-                KeyValuePair<int, Attestation> attestation = new KeyValuePair<int, Attestation>(ligne, this.attestations[ligne]);
-
-                if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action")
+                //if (e.ColumnIndex  == this.dataGridView1.ColumnCount - 1)
+                if (e.ColumnIndex >= 0)
                 {
-                    string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
-                    OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, attestation.Value.Email, this.textBox_sujet_mail.Text, this.textBox_message_mail.Text);
-                }
+                    int ligne = e.RowIndex;
+                    KeyValuePair<int, Attestation> attestation = new KeyValuePair<int, Attestation>(ligne, this.attestations[ligne]);
 
-                if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action pdf")
-                {
-                    string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
-                    System.Diagnostics.Process.Start(chemin_pdf);
+                    if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action")
+                    {
+                        string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
+                        OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, attestation.Value.Email, this.textBox_sujet_mail.Text, this.textBox_message_mail.Text);
+                    }
+
+                    if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action pdf")
+                    {
+                        string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
+                        System.Diagnostics.Process.Start(chemin_pdf);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Erreur : " + ex.StackTrace,
+                    "Erreur",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 

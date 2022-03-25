@@ -73,21 +73,18 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"
-					Nous soussignés, la Société BM12 Informatique, certifions que,
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Nous soussignés, la Société BM12 Informatique, certifions que,
 
-					{CIVILITE} {INTERLOCUTEUR}
+{CIVILITE} {INTERLOCUTEUR}
+a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année,
+dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
+Enregistré sous le numéro 73 12 00583 12
+En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
 
-					a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année,
-					dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
-					Enregistré sous le numéro 73 12 00583 12
-					En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
+Les Vernhes, le XX/XX/20XX
 
-					Les Vernhes, le XX/XX/20XX
-
-					Gérante BM12
-					Brigitte Mayanobe
-				")]
+Gérante BM12
+Brigitte Mayanobe				")]
         public string Corps_PDF {
             get {
                 return ((string)(this["Corps_PDF"]));
@@ -99,25 +96,23 @@ namespace AboMB12.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"
-					<html>
-					<head>
-					</head>
-					<body>
-					<div>
-					<p>Bonjour,</p>
-					<p>&nbsp;</p>
-					<p>Veuillez trouver ci-joint votre attestation de formation 2020.</p>
-					<p>&nbsp;</p>
-					<p><b><span style=""color:#00B050"">Merci de communiquer rapidement cette attestation à votre comptable.</span></b></p>
-					<p>&nbsp;</p>
-					<p>Cordialement,</p>
-					<p>Brigitte MAYANOBE</p>
-					<p>&nbsp;</p>
-					</div>
-					</body>
-					</html>
-				")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<html>
+<head>
+</head>
+<body>
+<div>
+<p>Bonjour,</p>
+<p>&nbsp;</p>
+<p>Veuillez trouver ci-joint votre attestation de formation 2020.</p>
+<p>&nbsp;</p>
+<p><b><span style=""color:#00B050"">Merci de communiquer rapidement cette attestation à votre comptable.</span></b></p>
+<p>&nbsp;</p>
+<p>Cordialement,</p>
+<p>Brigitte MAYANOBE</p>
+<p>&nbsp;</p>
+</div>
+</body>
+</html>")]
         public string Corps_Mail {
             get {
                 return ((string)(this["Corps_Mail"]));

@@ -123,25 +123,6 @@
   <metadata name="openFileDialogRTF.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>163, 17</value>
   </metadata>
-  <data name="textBox_consignes.Text" xml:space="preserve">
-    <value>1 - Exporter de la compta le fichier client avec les colonnes dans cet ordre : 
-
-sCliCode, sCliRaisonSoc, sCliAdresse1Ligne, sCliAdresse1CodePos, sCliAdresse1Ville, sContact.Tel, sContact.Portable, sContact.EMail
-
-2 - Ouvrir le fichier dans Excel et rajouter une colonne Heure
-
-3 - Saisir les heures de formation pour chaque client
-
-4 - Enregistrer le fichier CSV
-
-5 - Ouvrir le fichier avec le bouton "Importer CSV"
-
-6 - On peux soit :
-     - sortir les mails 1 par 1 avec le bouton générer
-     - sortir tout les mails d'un coup avec le bouton "Générer les emails"
-
-    </value>
-  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>81</value>
   </metadata>
