@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AboMB12.Properties;
@@ -26,26 +27,18 @@ namespace AboMB12
         {
             this.InitializeComponent();
 
-            //this.webBrowser1.Navigate("");
+            this.RefreshHtmlView();
+        }
 
-            //Application.DoEvents();
+        private void RefreshHtmlView()
+        {
+            var dire = Directory.GetCurrentDirectory();
 
-            //this.webBrowser1.Document.OpenNew(false).Write(@"<html><body><div id=""editable"">Edit this text</div></body></html>");
+            var uri = new System.Uri(Path.Combine(dire, "message_mail.html"));
+            var converted = uri.AbsoluteUri;
 
-            ////'turns off document body editing
-            //foreach (HtmlElement item in this.webBrowser1.Document.All)
-            //{
-            //    item.SetAttribute("unselectable", "on");
-            //    item.SetAttribute("contenteditable", "true");
-            //    item.SetAttribute("width", this.Width + "px");
-            //    item.SetAttribute("height", "100%");
-            //    item.SetAttribute("contenteditable", "true");
-            //}
-
-            ////'turns on edit mode
-            ////this.webBrowser1.ActiveXInstance = "On";
-            ////'stops right click->Browse View
-            //this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
+            //this.webBrowser2.Navigate(new Uri(@"file:///C:/Users/Renaud/source/repos/AboMB12/AboMB12/message_mail.html"));
+            this.webBrowser2.Navigate(converted);
         }
 
         /// <summary>
@@ -85,6 +78,7 @@ namespace AboMB12
 
                 this.dataGridView1.DataSource = table;
                 this.dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                this.dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
                 this.dataGridView1.Refresh();
 
                 // Ajout des boutons de manipulation
@@ -131,6 +125,13 @@ namespace AboMB12
                 btn.Text = "PDF";
                 btn.Name = "btn";
                 btn.UseColumnTextForButtonValue = true;
+
+                btn = new DataGridViewButtonColumn();
+                this.dataGridView1.Columns.Insert(2, btn);
+                btn.HeaderText = "Action test";
+                btn.Text = "Brouillon";
+                btn.Name = "btn";
+                btn.UseColumnTextForButtonValue = true;
             }
         }
 
@@ -159,6 +160,12 @@ namespace AboMB12
                     {
                         string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
                         System.Diagnostics.Process.Start(chemin_pdf);
+                    }
+
+                    if (this.dataGridView1.Columns[e.ColumnIndex].HeaderText == "Action test")
+                    {
+                        string chemin_pdf = Pdf.CreatePDF(attestation, this.textBox_titre_attestation.Text, this.textBox_message.Text, Application.ExecutablePath);
+                        OutlookHelper.CreateMailOutlookAvecPJ(chemin_pdf, "test@test.com", this.textBox_sujet_mail.Text, this.textBox_message_mail.Text);
                     }
                 }
             }
@@ -223,7 +230,10 @@ namespace AboMB12
         private void Form1_Load(object sender, EventArgs e)
         {
             this.textBox_message.Text = AboMB12.Properties.Settings.Default.Corps_PDF;
-            this.textBox_message_mail.Text = AboMB12.Properties.Settings.Default.Corps_Mail;
+
+            string[] modeleTable = File.ReadAllLines(@".\message_mail.html");
+            this.textBox_message_mail.Text = string.Join(Environment.NewLine, modeleTable);
+
             this.textBox_sujet_mail.Text = AboMB12.Properties.Settings.Default.Sujet_Mail;
             this.textBox_titre_attestation.Text = AboMB12.Properties.Settings.Default.Titre_PDF;
 
@@ -255,21 +265,20 @@ namespace AboMB12
         /// <param name="e"></param>
         private void ButtonSauveMessage_Click(object sender, EventArgs e)
         {
-            AboMB12.Properties.Settings.Default.Corps_PDF = this.textBox_message.Text;
-            AboMB12.Properties.Settings.Default.Corps_Mail = this.textBox_message_mail.Text;
-            AboMB12.Properties.Settings.Default.Sujet_Mail = this.textBox_sujet_mail.Text;
-            AboMB12.Properties.Settings.Default.Titre_PDF = this.textBox_titre_attestation.Text;
+            // AboMB12.Properties.Settings.Default.Corps_PDF = this.textBox_message.Text;
+            // AboMB12.Properties.Settings.Default.Corps_Mail = this.textBox_message_mail.Text;
+            // AboMB12.Properties.Settings.Default.Sujet_Mail = this.textBox_sujet_mail.Text;
+            // AboMB12.Properties.Settings.Default.Titre_PDF = this.textBox_titre_attestation.Text;
 
             Settings.Default.Save();
+
+            File.WriteAllText(@".\message_mail.html", this.textBox_message_mail.Text);
+            this.RefreshHtmlView();
         }
 
         private void Form1_Unload(object sender, FormClosingEventArgs e)
         {
             this.ButtonSauveMessage_Click(sender, e);
-        }
-
-        private void OpenFileDialogCSV_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
         }
     }
 }

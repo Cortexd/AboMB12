@@ -32,21 +32,6 @@ namespace AboMB12
 
             mail.Attachments.Add(chemin_pdf);
             mail.Save();
-
-            // mail.Display(true);
-
-            //        Outlook.NameSpace omNamespace = outlookApp.GetNamespace("MAPI");
-            //        Outlook.Recipient omUser = omNamespace.CreateRecipient("test");
-            //        omUser.Resolve();
-            //        Outlook.MAPIFolder doissierBrouillon = omNamespace.GetSharedDefaultFolder(omUser, Outlook.OlDefaultFolders.olFolderDrafts)
-            // Dim omMailItem As Outlook.MailItem = CType(omDrafts.Items.Add, Outlook.MailItem)
-            // With omMailItem
-            //    .SentOnBehalfOfName = "otheruser@mail.com"
-            //    .To = "bill@gates.com"
-            //    .Subject = "Test"
-            //    .Body = "Test email"
-            //    .Save()
-            //    .Move(omDrafts)
         }
 
         /// <summary>
@@ -66,7 +51,7 @@ namespace AboMB12
 
             mail.Subject = textBox_sujet_mail;
             mail.To = adresse_mail;
-            mail.Body = textBox_message_mail;
+            mail.HTMLBody = textBox_message_mail;
 
             mail.Attachments.Add(chemin_pdf);
 

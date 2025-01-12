@@ -12,7 +12,7 @@ namespace AboMB12.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -23,15 +23,12 @@ namespace AboMB12.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Dernier_Fichier_csv {
             get {
                 return ((string)(this["Dernier_Fichier_csv"]));
-            }
-            set {
-                this["Dernier_Fichier_csv"] = value;
             }
         }
         
@@ -47,78 +44,43 @@ namespace AboMB12.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ATTESTATION 20XX")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ATTESTATION FORMATION 2024")]
         public string Titre_PDF {
             get {
                 return ((string)(this["Titre_PDF"]));
             }
-            set {
-                this["Titre_PDF"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Abonnement BM12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Attestation de formation BM12 2024")]
         public string Sujet_Mail {
             get {
                 return ((string)(this["Sujet_Mail"]));
             }
-            set {
-                this["Sujet_Mail"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Nous soussignés, la Société BM12 Informatique, certifions que,
+        [global::System.Configuration.DefaultSettingValueAttribute(@"
+					Nous soussignés, la Société BM12 Informatique, certifions que,
 
-{CIVILITE} {INTERLOCUTEUR}
-a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année,
-dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
-Enregistré sous le numéro 73 12 00583 12
-En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
+					{CIVILITE} {INTERLOCUTEUR}
+					a suivi une formation aux logiciels Informatiques de {HEURE} heures, durant l'année 2024,
+					dispensée par Brigitte MAYANOBE, formatrice au sein de notre établissement.
+					Enregistré sous le numéro 73 12 00583 12
+					En foi de quoi, nous lui délivrons cette attestation pour lui servir et faire valoir ce que de droit.
 
-Les Vernhes, le XX/XX/20XX
+					Les Vernhes, le 18/01/2025
 
-Gérante BM12
-Brigitte Mayanobe				")]
+					Gérante BM12
+					Brigitte Mayanobe
+				")]
         public string Corps_PDF {
             get {
                 return ((string)(this["Corps_PDF"]));
-            }
-            set {
-                this["Corps_PDF"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<html>
-<head>
-</head>
-<body>
-<div>
-<p>Bonjour,</p>
-<p>&nbsp;</p>
-<p>Veuillez trouver ci-joint votre attestation de formation 2020.</p>
-<p>&nbsp;</p>
-<p><b><span style=""color:#00B050"">Merci de communiquer rapidement cette attestation à votre comptable.</span></b></p>
-<p>&nbsp;</p>
-<p>Cordialement,</p>
-<p>Brigitte MAYANOBE</p>
-<p>&nbsp;</p>
-</div>
-</body>
-</html>")]
-        public string Corps_Mail {
-            get {
-                return ((string)(this["Corps_Mail"]));
-            }
-            set {
-                this["Corps_Mail"] = value;
             }
         }
     }

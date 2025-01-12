@@ -41,8 +41,12 @@ namespace AboMB12
                     int cleDico = 0;
                     foreach (var record in records)
                     {
-                        retour.Add(cleDico, record);
-                        cleDico++;
+                        // Filtrage si pas d'heure
+                        if (!string.IsNullOrWhiteSpace(record.Heure))
+                        {
+                            retour.Add(cleDico, record);
+                            cleDico++;
+                        }
                     }
                 }
             }
