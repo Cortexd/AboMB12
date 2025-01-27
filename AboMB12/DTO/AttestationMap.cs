@@ -26,7 +26,7 @@ namespace AboMB12
             this.Map(m => m.Civilite).Name("sContact.Civilite", "sContact.Civilite");
             this.Map(m => m.Interlocuteur).Name("sContact.Interloc", "sContact.Interloc");
             this.Map(m => m.Email).Name("sContact.EMail", "sContact.EMail");
-            this.Map(m => m.Heure).Name("Heure", "Heure");
+            this.Map(m => m.Heure).Name("Heure", "Heure", "Heures");
         }
     }
 }
