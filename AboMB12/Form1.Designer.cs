@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_import_csv = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.bnt_generer = new System.Windows.Forms.Button();
+            this.bnt_generate_all_draft = new System.Windows.Forms.Button();
             this.openFileDialogCSV = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogRTF = new System.Windows.Forms.OpenFileDialog();
             this.textBox_message = new System.Windows.Forms.TextBox();
@@ -49,20 +50,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.but_sauve = new System.Windows.Forms.Button();
-            this.button_TOUT_envoyer = new System.Windows.Forms.Button();
+            this.btn_generate_and_send_all = new System.Windows.Forms.Button();
             this.webBrowser2 = new System.Windows.Forms.WebBrowser();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_import_csv
             // 
+            this.btn_import_csv.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_import_csv.Location = new System.Drawing.Point(12, 7);
             this.btn_import_csv.Name = "btn_import_csv";
-            this.btn_import_csv.Size = new System.Drawing.Size(98, 28);
+            this.btn_import_csv.Size = new System.Drawing.Size(139, 28);
             this.btn_import_csv.TabIndex = 0;
-            this.btn_import_csv.Text = "Importer CSV";
+            this.btn_import_csv.Text = "Importer fichier CSV";
             this.btn_import_csv.UseVisualStyleBackColor = true;
             this.btn_import_csv.Click += new System.EventHandler(this.Btn_import_csv_Click);
             // 
@@ -70,52 +74,52 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView1.Location = new System.Drawing.Point(12, 41);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridView1.Size = new System.Drawing.Size(1470, 234);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellClick);
             // 
-            // bnt_generer
+            // bnt_generate_all_draft
             // 
-            this.bnt_generer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bnt_generer.Location = new System.Drawing.Point(830, 7);
-            this.bnt_generer.Name = "bnt_generer";
-            this.bnt_generer.Size = new System.Drawing.Size(85, 28);
-            this.bnt_generer.TabIndex = 3;
-            this.bnt_generer.Text = "Brouillons";
-            this.bnt_generer.UseVisualStyleBackColor = true;
-            this.bnt_generer.Visible = false;
-            this.bnt_generer.Click += new System.EventHandler(this.Bnt_generer_tous_brouillons_Click);
+            this.bnt_generate_all_draft.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bnt_generate_all_draft.Location = new System.Drawing.Point(951, 7);
+            this.bnt_generate_all_draft.Name = "bnt_generate_all_draft";
+            this.bnt_generate_all_draft.Size = new System.Drawing.Size(262, 28);
+            this.bnt_generate_all_draft.TabIndex = 3;
+            this.bnt_generate_all_draft.Text = "Générer tout les brouillons";
+            this.bnt_generate_all_draft.UseVisualStyleBackColor = true;
+            this.bnt_generate_all_draft.Visible = false;
+            this.bnt_generate_all_draft.Click += new System.EventHandler(this.Bnt_generer_tous_brouillons_Click);
             // 
             // openFileDialogCSV
             // 
@@ -127,7 +131,7 @@
             // 
             // textBox_message
             // 
-            this.textBox_message.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_message.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_message.Location = new System.Drawing.Point(47, 52);
             this.textBox_message.Multiline = true;
             this.textBox_message.Name = "textBox_message";
@@ -184,7 +188,7 @@
             // 
             // textBox_message_mail
             // 
-            this.textBox_message_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_message_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_message_mail.Location = new System.Drawing.Point(9, 55);
             this.textBox_message_mail.Multiline = true;
             this.textBox_message_mail.Name = "textBox_message_mail";
@@ -225,32 +229,34 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(116, 7);
+            this.progressBar1.Location = new System.Drawing.Point(157, 7);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(708, 28);
+            this.progressBar1.Size = new System.Drawing.Size(788, 28);
             this.progressBar1.TabIndex = 14;
             // 
             // but_sauve
             // 
+            this.but_sauve.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.but_sauve.Location = new System.Drawing.Point(674, 676);
             this.but_sauve.Name = "but_sauve";
-            this.but_sauve.Size = new System.Drawing.Size(299, 23);
+            this.but_sauve.Size = new System.Drawing.Size(388, 40);
             this.but_sauve.TabIndex = 15;
             this.but_sauve.Text = "Sauvegarde des modèles mail et attestation";
             this.but_sauve.UseVisualStyleBackColor = true;
             this.but_sauve.Click += new System.EventHandler(this.ButtonSauveMessage_Click);
             // 
-            // button_TOUT_envoyer
+            // btn_generate_and_send_all
             // 
-            this.button_TOUT_envoyer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_TOUT_envoyer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.button_TOUT_envoyer.Location = new System.Drawing.Point(921, 7);
-            this.button_TOUT_envoyer.Name = "button_TOUT_envoyer";
-            this.button_TOUT_envoyer.Size = new System.Drawing.Size(141, 28);
-            this.button_TOUT_envoyer.TabIndex = 16;
-            this.button_TOUT_envoyer.Text = "Envoyer";
-            this.button_TOUT_envoyer.UseVisualStyleBackColor = true;
-            this.button_TOUT_envoyer.Click += new System.EventHandler(this.Button_envoyer_TOUT_Click);
+            this.btn_generate_and_send_all.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_generate_and_send_all.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btn_generate_and_send_all.Location = new System.Drawing.Point(1220, 7);
+            this.btn_generate_and_send_all.Name = "btn_generate_and_send_all";
+            this.btn_generate_and_send_all.Size = new System.Drawing.Size(262, 28);
+            this.btn_generate_and_send_all.TabIndex = 16;
+            this.btn_generate_and_send_all.Text = "Générer et tout envoyer";
+            this.btn_generate_and_send_all.UseVisualStyleBackColor = true;
+            this.btn_generate_and_send_all.Visible = false;
+            this.btn_generate_and_send_all.Click += new System.EventHandler(this.Button_envoyer_TOUT_Click);
             // 
             // webBrowser2
             // 
@@ -260,18 +266,29 @@
             this.webBrowser2.Size = new System.Drawing.Size(402, 413);
             this.webBrowser2.TabIndex = 18;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 676);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(98, 80);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 19;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1503, 759);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.webBrowser2);
-            this.Controls.Add(this.button_TOUT_envoyer);
+            this.Controls.Add(this.btn_generate_and_send_all);
             this.Controls.Add(this.but_sauve);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.bnt_generer);
+            this.Controls.Add(this.bnt_generate_all_draft);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btn_import_csv);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -284,6 +301,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -292,7 +310,7 @@
 
         private System.Windows.Forms.Button btn_import_csv;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button bnt_generer;
+        private System.Windows.Forms.Button bnt_generate_all_draft;
         private System.Windows.Forms.OpenFileDialog openFileDialogCSV;
         private System.Windows.Forms.OpenFileDialog openFileDialogRTF;
         private System.Windows.Forms.TextBox textBox_message;
@@ -307,8 +325,9 @@
         private System.Windows.Forms.Button but_sauve;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button_TOUT_envoyer;
+        private System.Windows.Forms.Button btn_generate_and_send_all;
         private System.Windows.Forms.WebBrowser webBrowser2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

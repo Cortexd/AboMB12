@@ -84,8 +84,10 @@ namespace AboMB12
                 // Ajout des boutons de manipulation
                 this.AjouterBouttonGridview();
 
-                // Changer le label du bouton
-                this.bnt_generer.Visible = true;
+                // Affichage des boutons
+                this.bnt_generate_all_draft.Visible = true;
+                this.btn_generate_and_send_all.Visible = true;
+
             }
             else
             {
@@ -100,7 +102,7 @@ namespace AboMB12
                     true);
 
                 // Changer le label du bouton
-                this.bnt_generer.Visible = false;
+                this.bnt_generate_all_draft.Visible = false;
             }
         }
 
